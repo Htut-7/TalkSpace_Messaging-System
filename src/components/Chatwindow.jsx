@@ -3,10 +3,9 @@ import MessageInput from "./MessageInput";
 import MessageList from "./MessageList";
 import "../css/Chatwindow.css";
 
-export default function Chatwindow({ selectedUser }) {
+export default function Chatwindow({ selectedUser, setSelectedUser }) {
 
-const [now, setNow] = useState(() => Date.now());
-
+  const [now, setNow] = useState(() => Date.now());
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -32,25 +31,41 @@ const [now, setNow] = useState(() => Date.now());
     return `${hours} hr ago`;
   };
 
+  
+  if (!selectedUser) {
+    return (
+      <div className="chat-window empty">
+        Select a user to start chatting
+      </div>
+    );
+  }
+
   return (
-    <div className="chat-window">
+  <div className={`chat-window ${selectedUser ? "active" : ""}`}>
       <div className="chat-header">
-        {selectedUser ? (
-          <>
-            <div>{selectedUser.name || selectedUser.email}</div>
-            <small>
+        <div className="chat-user">
+          <div className="avatar-circle"></div>
+
+          <div className="user-info">
+            <span className="user-name">
+              {selectedUser.name || selectedUser.email}
+            </span>
+
+            <span className="user-status">
               {selectedUser.isOnline
                 ? "Online"
                 : `Last seen ${formatLastSeen(selectedUser.lastSeen)}`}
-            </small>
-          </>
-        ) : (
-          "Chat"
-        )}
+            </span>
+          </div>
+        </div>
+
+        <button className="back-btn" onClick={() => setSelectedUser(null)}>
+          Back
+        </button>
       </div>
 
-      <MessageList selectedUser={selectedUser}/>
-      <MessageInput selectedUser={selectedUser}/>
+      <MessageList selectedUser={selectedUser} />
+      <MessageInput selectedUser={selectedUser} />
     </div>
   );
 }

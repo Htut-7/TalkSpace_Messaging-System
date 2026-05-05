@@ -27,29 +27,27 @@
 }
 
 @media (max-width: 768px) {
-  .sidebar {
-    width: 80px;
-  }
-
   .main {
-    flex-direction: row;
-  }
-}
-
-@media (max-width: 480px) {
-  .dashboard {
-    height: 100vh;
-  }
-
-  .main {
-    flex-direction: column;
+    position: relative;
   }
 
   .sidebar {
-    display: none;
+    width: 100%;
+    height: 100%;
   }
 
   .chat-window {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
+    background: #0b1220;
+    transform: translateX(100%);
+    transition: 0.3s;
+  }
+
+  .chat-window.active {
+    transform: translateX(0);
   }
 }

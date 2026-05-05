@@ -1,21 +1,25 @@
+import { useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Chatwindow from "../components/Chatwindow";
-import { useState } from "react";
-import "../css/Dashboard.css";
+import "../css/Dashboard.css"
 
 export default function Dashboard() {
 
-  const [selectedUser,setSelectedUser]=useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   return (
     <div className="dashboard">
-        <Header/>
+      <Header />
 
-        <div className="main">
-            <Sidebar onSelectUser={setSelectedUser}/>
-            <Chatwindow selectedUser={selectedUser}/>
-        </div>
+      <div className="main">
+        <Sidebar onSelectUser={setSelectedUser} />
+
+        <Chatwindow
+          selectedUser={selectedUser}
+          setSelectedUser={setSelectedUser}
+        />
+      </div>
     </div>
-  )
+  );
 }
